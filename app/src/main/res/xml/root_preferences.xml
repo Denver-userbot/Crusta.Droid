@@ -32,7 +32,7 @@
         <EditTextPreference
             app:key="homepage"
             app:title="Home Page"
-            app:defaultValue="http://google.com"
+            app:defaultValue="crusta://home"
             app:useSimpleSummaryProvider="true"
             app:summary="%s" />
 

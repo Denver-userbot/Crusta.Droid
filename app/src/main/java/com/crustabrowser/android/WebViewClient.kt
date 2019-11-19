@@ -8,6 +8,7 @@ import android.webkit.CookieManager
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.preference.PreferenceManager
 import com.crustabrowser.android.adblock.Adblocker
@@ -41,6 +42,17 @@ class WebViewClient : android.webkit.WebViewClient() {
     }
 
     override fun shouldInterceptRequest(view: WebView?, request: WebResourceRequest?): WebResourceResponse? {
+        // Handle crusta scheme
+        if (request?.url?.scheme.equals("crusta") && view != null) {
+            val host = request?.url?.host
+            try {
+                val data = view.context.assets.open("web/$host.html").bufferedReader().readText()
+                return WebResourceResponse("text/html", "utf-8", ByteArrayInputStream(data.toByteArray()))
+            } catch (e: java.lang.Exception) {
+
+            }
+        }
+
         if (preferences == null) {
             preferences = PreferenceManager.getDefaultSharedPreferences(view?.context)
         }

@@ -56,7 +56,9 @@ class WebView @JvmOverloads constructor(
     }
 
     fun loadHome() {
-        loadUrl("https://google.com")
+        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val address = preferences.getString("homepage", "crusta://home")
+        loadUrl(address)
     }
 
     fun search(query: String) {
